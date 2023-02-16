@@ -1,40 +1,29 @@
 pipeline {
-  agent any
+    agent any 
     stages {
-        stage('Build') {
+        stage('Build') { 
             steps {
-              script {
-                sh 'g++ --version'
-                sh 'g++ task5.cpp -o task5'
-                echo 'Build Stage Successful'
-              }
-                
+                sh 'g++ program.cpp -o task5' 
             }
         }
-        stage('Test') {
+        stage('Test') { 
             steps {
-              script {
+                sh 'cat program.cpp'
+            }
+        }
+        stage('Deploy') { 
+            steps {
                 sh './task5'
-                echo 'Test Stage Successful'
-              }
-                
-                
-            }
-        }
-        stage('Deploy') {
-            steps {
-              script {
-                echo 'Deployment Successful'
-              }
-                
+                //error 'Pipeline Failed' 
             }
         }
     }
-
-    post {
-
-        failure {
-            echo 'Pipeline failed'
+    post{
+        success{
+            echo 'Pipeline Success'
         }
+    	failure{
+    		echo 'Pipeline Failed'
+    	}
     }
 }
